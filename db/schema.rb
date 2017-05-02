@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502013926) do
+ActiveRecord::Schema.define(version: 20170502022629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,8 +19,6 @@ ActiveRecord::Schema.define(version: 20170502013926) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "line_id"
-    t.index ["line_id"], name: "index_characters_on_line_id"
     t.index ["name"], name: "index_characters_on_name"
   end
 
@@ -29,7 +27,11 @@ ActiveRecord::Schema.define(version: 20170502013926) do
     t.string "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "character_id"
+    t.bigint "scene_id"
+    t.index ["character_id"], name: "index_lines_on_character_id"
     t.index ["number"], name: "index_lines_on_number"
+    t.index ["scene_id"], name: "index_lines_on_scene_id"
   end
 
   create_table "scenes", force: :cascade do |t|
@@ -37,11 +39,9 @@ ActiveRecord::Schema.define(version: 20170502013926) do
     t.string "setting"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "line_id"
-    t.index ["line_id"], name: "index_scenes_on_line_id"
     t.index ["title"], name: "index_scenes_on_title"
   end
 
-  add_foreign_key "characters", "lines"
-  add_foreign_key "scenes", "lines"
+  add_foreign_key "lines", "characters"
+  add_foreign_key "lines", "scenes"
 end

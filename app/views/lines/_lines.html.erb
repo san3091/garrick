@@ -1,0 +1,11 @@
+<div class="line-collection">
+  <table>
+    <% @lines.each do |line| %>
+      <tr>
+        <td><%= line.character.name %></td>
+        <td><%= line.text %></td>
+        <td><%= line.number %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
