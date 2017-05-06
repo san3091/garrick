@@ -1,11 +1,10 @@
 import axios from 'axios'
 
 export const nextLine = (current) => {
-  let _current = current < 0 ? 0 : current
 
   let params = {
     method: 'get',
-    url: `/lines/${_current + 1}`,
+    url: `/lines/${_current}?query=next`,
     withCredentials: true,
     headers: {
       'Accept': 'application/json',
@@ -21,4 +20,19 @@ function getCSRFToken() {
   if (meta.length === 1) {
     return meta[0].getAttribute('content')
   }
+}
+
+export const getScene = (id) => {
+
+  let params = {
+    method: 'get',
+    url: `/scenes/${id}?include_first_line=true`,
+    withCredentials: true,
+    headers: {
+      'Accept': 'application/json',
+      'X-CSRF-Token': getCSRFToken()
+    }
+  }
+
+  return axios(params)
 }

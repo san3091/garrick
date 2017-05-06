@@ -5,9 +5,9 @@ import { nextLine } from '../modules/scenes'
 
 class Scene extends Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
-      line: {}
+      line: this.props.line
     }
     this.nextLine = this.nextLine.bind(this)
   }
@@ -44,7 +44,13 @@ class Scene extends Component {
     return (
       <div className="container">
         <h1>{this.props.title}</h1>
-        <Line text={line.text} name={line.character.name} number={line.number} />
+        <div className="line-collection">
+          <table>
+            <tbody>
+              <Line text={line.text} name={line.character.name} number={line.number} />
+            </tbody>
+          </table>
+        </div>
         <button onClick={this.nextLine}>Add Next Line</button>
       </div>
     )
