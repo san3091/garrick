@@ -11,8 +11,8 @@ class LinesController < ApplicationController
       @line = find_previous_line
     end
 
-    # ActionCable.server.broadcast "lines_channel", 
-    #                           line: render_line(message)
+    ActionCable.server.broadcast "lines_channel", 
+                              line: render_line(message)
   end
 
   private

@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-export const nextLine = (current) => {
+export const nextLine = (id) => {
 
   let params = {
     method: 'get',
-    url: `/lines/${_current}?query=next`,
+    url: `/lines/${id}?query=next`,
     withCredentials: true,
     headers: {
       'Accept': 'application/json',

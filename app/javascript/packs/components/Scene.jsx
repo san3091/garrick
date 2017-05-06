@@ -9,10 +9,16 @@ class Scene extends Component {
     this.state = {
       line: this.props.line
     }
-    this.nextLine = this.nextLine.bind(this)
+    this.nextLine           = this.nextLine.bind(this)
+    this.setupSubscription  = this.setupSubscription.bind(this)
+  }
+
+  componentWillMount() {
+    this.setupSubscription()
   }
 
   nextLine() {
+    console.log("next")
     const { line } = this.state
     nextLine(line.id)
     .then( res => console.log(res))
@@ -25,17 +31,26 @@ class Scene extends Component {
   }
 
   setupSubscription() {
+    console.log("this ran")
     let myself = this
+
     App.lines = App.cable.subscriptions.create("LinesChannel", {
+      connected: function() {
+        // Called when the subscription is ready for use on the server
+        console.log("connected to lines channel")
+      },
 
-        connected: function () { console.log("connected to lines channel")},
+      disconnected: function() {
+        // Called when the subscription has been terminated by the server
+        console.log("disconnected to lines channel")
+      },
 
-        received: function (data) {
-          console.log(JSON.parse(data.line))
-          myself.updateLine(JSON.parse(data.line));
-        }
+      received: function(data) {
+        // Called when there's incoming data on the websocket for this channel
+        console.log(JSON.parse(data.line))
+        myself.updateLine(JSON.parse(data.line));
       }
-    )
+    });
   }
 
   render() {
@@ -51,7 +66,7 @@ class Scene extends Component {
             </tbody>
           </table>
         </div>
-        <button onClick={this.nextLine}>Add Next Line</button>
+        <button onClick={this.nextLine}>Next Line</button>
       </div>
     )
   }
