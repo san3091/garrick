@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'lines/show'
+
   resources :scenes, only: [:index, :show]
   resources :lines, only: [:show]
 
