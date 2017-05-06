@@ -1,1 +1,1 @@
-json.extract! scene, :title, :setting
+json.extract! scene, :id, :title, :setting

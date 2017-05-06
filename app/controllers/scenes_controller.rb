@@ -5,6 +5,6 @@ class ScenesController < ApplicationController
 
   def show
     @scene = Scene.find(params[:id])
-    @lines = @scene.lines.includes(:character)
+    @first_line = Line.in_scene(@scene).find_by_number(1) if params[:include_first_line]
   end
 end

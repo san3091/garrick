@@ -3,11 +3,12 @@ class LinesController < ApplicationController
   before_action :set_scene
 
   def show
-    case params[:action]
+    case params[:query]
     when 'next'
-      @line = @scene.next_line(@line)
+      binding.pry
+      @line = find_next_line
     when 'prev'
-      @line = @scene.previous_line(@line)
+      @line = find_previous_line
     end
 
     # ActionCable.server.broadcast "lines_channel", 
@@ -15,6 +16,14 @@ class LinesController < ApplicationController
   end
 
   private
+
+  def find_next_line
+    Line.in_scene(@scene).find_by_number(@line.number + 1)
+  end
+
+  def find_previous_line
+    Line.in_scene(@scene).find_by_number(@line.number - 1)
+  end
 
   def set_scene
     @scene = @line.scene
