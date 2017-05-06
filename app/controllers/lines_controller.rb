@@ -5,14 +5,13 @@ class LinesController < ApplicationController
   def show
     case params[:query]
     when 'next'
-      binding.pry
       @line = find_next_line
     when 'prev'
       @line = find_previous_line
     end
 
     ActionCable.server.broadcast "lines_channel", 
-                              line: render_line(message)
+                              line: render_line(@line)
   end
 
   private
@@ -33,7 +32,7 @@ class LinesController < ApplicationController
     @line = Line.find(params[:id])
   end
 
-  def render_line
-    render(partial: 'line', locals: { line: @line })
+  def render_line(line)
+    render(partial: 'line', locals: { line: line })
   end
 end
