@@ -1,3 +1,5 @@
 class Character < ApplicationRecord
-  has_many :lines
+  belongs_to :scene
+  has_many :speeches
+  has_many :lines, through: :speeches
 end

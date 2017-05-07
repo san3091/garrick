@@ -1,4 +1,4 @@
 class Scene < ApplicationRecord
-  has_many :lines, dependent: :destroy
-  has_many :characters, through: :lines
+  has_many :characters
+  has_many :speeches, through: :characters
 end
